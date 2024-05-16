@@ -6,7 +6,6 @@ const RegisterPage = () => {
     return (
         <AutLayouts title="Register" type="register">
             <FormRegister/>
-            
         </AutLayouts>
     )
 }
