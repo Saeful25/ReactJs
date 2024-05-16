@@ -117,7 +117,7 @@ const Products = () => {
           }
            <tr>
             <td colSpan={3}><b>Total Price</b></td>
-            <td>{totalPrice.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</td>
+            <td><b>{totalPrice.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</b></td>
           </tr>
         </tbody>
       </table>
