@@ -1,4 +1,6 @@
+
 import React, { Fragment, useEffect, useState } from 'react'
+
 import CardProducts from '../Components/Fragments/CardProducts'
 import Button from '../Components/Elements/Button/Index';
 
@@ -31,6 +33,7 @@ const products = [
 const email = localStorage.getItem('email');
 const Products = () => {
 
+
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState (0);
     useEffect(() => {
@@ -52,6 +55,7 @@ const Products = () => {
       localStorage.setItem("cart", JSON.stringify(cart));
       }
     }, [cart]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('email');
@@ -115,6 +119,7 @@ const Products = () => {
           })
 
           }
+
            <tr>
             <td colSpan={3}><b>Total Price</b></td>
             <td>{totalPrice.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</td>
