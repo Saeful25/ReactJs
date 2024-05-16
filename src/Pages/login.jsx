@@ -4,7 +4,6 @@ const LoginPage = () => {
     return (
         <AutLayouts title="Login" type="login">
             <FormLogin/>
-            
         </AutLayouts>
     )
 }
