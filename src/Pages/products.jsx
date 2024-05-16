@@ -1,4 +1,6 @@
-import React, { Fragment, useState } from 'react'
+
+import React, { Fragment, useEffect, useState } from 'react'
+
 import CardProducts from '../Components/Fragments/CardProducts'
 import Button from '../Components/Elements/Button/Index';
 
@@ -31,12 +33,29 @@ const products = [
 const email = localStorage.getItem('email');
 const Products = () => {
 
-    const [cart, setCart] = useState([
-      {
-        id: 1,
-        qty:1
+
+    const [cart, setCart] = useState([]);
+    const [totalPrice, setTotalPrice] = useState (0);
+    useEffect(() => {
+      // parsing data dari local storage
+      // JSON.parse untuk mengkonfersi json string menjadi object
+      setCart(JSON.parse(localStorage.getItem("cart")) || []);
+    },[])
+
+    useEffect(() => {
+      if(cart.length > 0) {
+
+      // acc adalah acumulator
+      const sum = cart.reduce((acc, item ) =>{
+        const product = products.find((product) => product.id == item.id);
+        return acc + product.price * item.qty;
+      }, 0)
+      setTotalPrice(sum);
+      // JSON.stringify untuk mengconfersi javascript value menjadi js object notion /json string
+      localStorage.setItem("cart", JSON.stringify(cart));
       }
-    ]);
+    }, [cart]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('email');
@@ -100,6 +119,11 @@ const Products = () => {
           })
 
           }
+
+           <tr>
+            <td colSpan={3}><b>Total Price</b></td>
+            <td>{totalPrice.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</td>
+          </tr>
         </tbody>
       </table>
     </div>
