@@ -15,7 +15,6 @@ const AutLayouts = (props) => {
           {type === 'login' 
           ? "Don't have an account ? " 
           : "Already have an account ? "}
-
           {type === 'login' && (
             <Link className="font-bold text-blue-600" to="/register">Sign Up</Link>
           )
