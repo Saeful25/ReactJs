@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 const AutLayouts = (props) => {
-    const {children, title} = props
+    const {children, title, type} = props
   return (
 <div className='flex justify-center min-h-screen items-center'>
       <div className="w-full max-w-xs">
@@ -10,6 +11,19 @@ const AutLayouts = (props) => {
         Welcome,Please enter my detail
         </p>
         {children}
+        <p className="text-sm mt-5 text-center">
+          {type === 'login' 
+          ? "Don't have an account ? " 
+          : "Already have an account ? "}
+          {type === 'login' && (
+            <Link className="font-bold text-blue-600" to="/register">Sign Up</Link>
+          )
+          }
+          {type === 'register' && (
+            <Link className="font-bold text-blue-600" to="/login">Sign In</Link>
+          )
+          }
+          </p>
       </div>
     </div>
   )
