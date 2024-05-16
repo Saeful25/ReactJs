@@ -4,7 +4,7 @@ const CardProducts = (props) => {
     const {children} = props ;
   return (
    
-        <div className='w-full max-w-sm border border-gray-200 rounded-lg shadow '>   
+        <div className='w-full max-w-sm border border-gray-200 rounded-lg shadow flex flex-col'>   
            {children}
         </div>
   )
@@ -19,11 +19,11 @@ const Header = (props) => {
     )
 }
 const Body = (props) => {
-    const {children, title} = props ;
+    const {children, name} = props ;
     return (
-        <div className="px-5 pb-5">
+        <div className="px-5 pb-5 h-full">
         <a href="">
-          <h5 className='text-xl font-semibold tracking-tight '>{title}</h5>
+          <h5 className='text-xl font-semibold tracking-tight '>{name}</h5>
           <p className='text-m'>
             {children}
           </p>
