@@ -4,7 +4,7 @@ const CardProducts = (props) => {
     const {children} = props ;
   return (
    
-        <div className='w-full max-w-sm border border-gray-200 rounded-lg shadow flex flex-col'>   
+        <div className='w-full max-w-sm border border-gray-200 rounded-lg shadow flex flex-col mx-2'>   
            {children}
         </div>
   )
