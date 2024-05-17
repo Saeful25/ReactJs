@@ -1,38 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import CardProducts from '../Components/Fragments/CardProducts'
 import Button from '../Components/Elements/Button/Index';
-
-const products = [
-  {
-    id: 1,
-    name: 'Product 1',
-    price: 100000,
-    image: '/images/shoes-1.jpg',
-    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus est commodi, ipsa fugiat mollitia voluptates quidem suscipit minus? Aspernatur, dolore.',
-  },
-  {
-    id: 2,
-    name: 'Sepatu snackers',
-    price: 1000000,
-    image: '/images/shoes-1.jpg',
-    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus est commodi',
-
-  },
-  {
-    id: 3,
-    name: 'Sepatu snackers',
-    price: 500000,
-    image: '/images/shoes-1.jpg',
-    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus est commodi',
-    
-  },
-]
+import { getProducts } from '../services/product.services';
+import { data } from 'autoprefixer';
 
 const email = localStorage.getItem('email');
 const Products = () => {
 
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState (0);
+    const [products, setProducts] = useState ([]);
+
     useEffect(() => {
       // parsing data dari local storage
       // JSON.parse untuk mengkonfersi json string menjadi object
@@ -45,14 +23,19 @@ const Products = () => {
       // acc adalah acumulator
       const sum = cart.reduce((acc, item ) =>{
         const product = products.find((product) => product.id == item.id);
-        return acc + product.price * item.qty;
+        return acc + products.price * item.qty;
       }, 0)
       setTotalPrice(sum);
       // JSON.stringify untuk mengconfersi javascript value menjadi js object notion /json string
       localStorage.setItem("cart", JSON.stringify(cart));
       }
-    }, [cart]);
+    }, [cart, products]);
 
+    useEffect (() => {
+      getProducts((data) => {
+        setProducts(data);
+      });
+    }, [])
   const handleLogout = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
@@ -76,10 +59,10 @@ const Products = () => {
       </div>
       <div className='flex justify-center py-5'>
         <div className="w-4/6 flex flex-wrap">
-      {products.map ((product) =>
+      {products.length > 0 &&  products.map ((product) =>
         <CardProducts key={product.id}>
         <CardProducts.Header image={product.image}/>
-        <CardProducts.Body name={product.name}>
+        <CardProducts.Body name={product.title}>
           {product.description}
         </CardProducts.Body>
         <CardProducts.Footer price={product.price} id={product.id} handleAddToCart={handleAddToCart} />
@@ -98,18 +81,18 @@ const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {cart.map((item) => {
+          {products.length > 0 && cart.map((item) => {
             const product = products.find((product) => product.id === item.id);
             return (
               <tr key={item.id}>
-                <td>{product.name}</td>
-                <td>{product.price.toLocaleString('id-ID', {
+                <td>{product.title.substring(0,10)}...</td>
+                <td>{product.price.toLocaleString('us-US', {
                   style: 'currency', 
-                  currency: 'IDR'
+                  currency: 'USD'
                   })}
                 </td>
                 <td>{item.qty}</td>
-                <td>{product.price.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</td> 
+                <td>{product.price.toLocaleString('us-US', {style: 'currency', currency: 'USD'})}</td> 
               </tr>
             )
           })
@@ -117,7 +100,7 @@ const Products = () => {
           }
            <tr>
             <td colSpan={3}><b>Total Price</b></td>
-            <td><b>{totalPrice.toLocaleString('id-ID', {style: 'currency', currency: 'IDR'})}</b></td>
+            <td><b>{totalPrice.toLocaleString('us-US', {style: 'currency', currency: 'USD'})}</b></td>
           </tr>
         </tbody>
       </table>
